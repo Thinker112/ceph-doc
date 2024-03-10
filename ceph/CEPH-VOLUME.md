@@ -16,6 +16,26 @@ ceph_admin@cephadmin:~$ sudo ceph-volume inventory /dev/sdj
      available                 False
      rejected reasons          Insufficient space (<5GB)
      device id                 ATA_ST4000NM002A-2HZ_WS24ZTHD
+
+ceph_admin@ceph1:~$ sudo ceph-volume inventory /dev/sdb
+
+====== Device report /dev/sdb ======
+
+     path                      /dev/sdb
+     ceph device               False
+     lsm data                  {}
+     available                 True
+     rejected reasons
+     device id                 AVAGO_MR9361-8i_00de5997203d3f9427204d5010b00506
+     removable                 0
+     ro                        0
+     vendor                    AVAGO
+     model                     MR9361-8i
+     sas address
+     rotational                1
+     actuators                 None
+     scheduler mode            mq-deadline
+     human readable size       446.62 GB
 ```
 
 `ceph-volume lvm` 命令用于管理 Ceph OSD 使用的 LVM 卷。它支持以下操作：
