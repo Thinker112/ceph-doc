@@ -16,6 +16,7 @@ mon.ceph4: {}
 mon.ceph4: mon_allow_pool_delete = 'true'
 mon.ceph3: {}
 mon.ceph3: mon_allow_pool_delete = 'true'
+# 重试
 ceph_admin@ceph1:/etc/ceph$ sudo ceph osd pool delete ecpool  ecpool  --yes-i-really-really-mean-it
 pool 'ecpool' removed
 ```
