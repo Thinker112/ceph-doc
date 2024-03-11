@@ -3,9 +3,9 @@
 ## 常用命令
 
 ```
-#查看mgr各个模块信息
+# 查看mgr各个模块信息
 sudo ceph mgr module ls
-
+# Example
 ceph_admin@cephadmin:~$ sudo ceph mgr module ls
 MODULE
 balancer              on (always on)
@@ -43,12 +43,6 @@ telegraf              -
 test_orchestrator     -
 zabbix                -
 ```
-
-
-
-
-
-
 
 
 

@@ -32,6 +32,10 @@ ceph_admin@ceph1:~$ sudo mkfs -t xfs -f /dev/sdb
 mkfs.xfs: cannot open /dev/sdb: Device or resource busy
 ```
 
+#### 问题原因
+
+块设备已经存在逻辑卷映射配置，移除即可
+
 #### 解决方法
 
 ```bash
@@ -66,15 +70,44 @@ realtime =none                   extsz=4096   blocks=0, rtextents=0
 
 ```
 
+## OSD 配置
 
+打印出一份由Cephadm发现的设备清单
 
+`ceph orch device ls [--hostname=...] [--wide] [--refresh]`
 
+**OSD 配置文件**
+
+`sudo ceph orch apply -i osd.yaml` 应用配置到集群中
+
+```yaml
+service_type: osd
+service_id: osd_using_path
+placement:
+  hosts:
+    - ceph1
+spec:
+  data_devices:
+    paths:
+    - /dev/sdd
+    - /dev/sde
+    - /dev/sdf
+    - /dev/sdg
+    - /dev/sdh
+    - /dev/sdi
+    - /dev/sdj
+    - /dev/sdk
+  db_devices:
+    paths:
+    - /dev/sdb
+    - /dev/sdc
+```
 
 ## 操作命令
 
 1. 向集群中添加OSD
    1.  `sudo ceph orch daemon add osd hostname:/path/dev`
-   2.  [配置文件形式](https://docs.ceph.com/en/latest/cephadm/services/osd/#advanced-osd-service-specifications)
+   2.  :star:**推荐**：​[配置文件形式](https://docs.ceph.com/en/latest/cephadm/services/osd/#advanced-osd-service-specifications) 
 
 
 2. 检查现有 OSD
@@ -99,8 +132,6 @@ ceph_admin@cephadmin:~$ ceph orch osd rm stop 4
 Stopped OSD(s) removal
 ```
 
-
-
 ### 删除现有 OSD
 
 1. 将OSD标记为"out"，这将使Ceph开始将数据从该OSD迁移到其他OSD
@@ -118,8 +149,4 @@ Stopped OSD(s) removal
 4. 从Ceph集群中删除该OSD
 
    `ceph osd purge osd.<osd-id> --yes-i-really-mean-it`
-
-
-
-
 

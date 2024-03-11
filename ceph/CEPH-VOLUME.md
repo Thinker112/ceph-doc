@@ -123,3 +123,12 @@ ceph-volume lvm new-wal /dev/sdc
 ```
 ceph-volume lvm new-db /dev/sdc
 ```
+
+
+
+```bash
+/usr/lib/python3/dist-packages/ceph_volume/util/disk.py
+884 line added line device_slaves=False
+because line 889 have comparison not initialized variable
+```
+
