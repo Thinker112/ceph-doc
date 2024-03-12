@@ -44,6 +44,31 @@ test_orchestrator     -
 zabbix                -
 ```
 
+```bash
+# 查看mgr状态
+ceph_admin@ceph1:~$ sudo ceph mgr stat
+{
+    "epoch": 78,
+    "available": true,
+    "active_name": "ceph3.hhzlsj",
+    "num_standby": 0
+}
+
+```
+
+```bash
+ceph_admin@ceph1:~$ sudo ceph mgr services
+{
+    "dashboard": "http://10.120.5.21:8443/",
+    "prometheus": "http://10.120.5.23:9283/"
+}
+```
+
+```bash
+# 查看集群配置
+ceph_admin@ceph3:~$ sudo ceph config dump
+```
+
 
 
 ## [Dashboard 控制台](https://docs.ceph.com/en/latest/mgr/dashboard/)
@@ -56,11 +81,22 @@ zabbix                -
 
 ` sudo ceph config set mgr mgr/dashboard/ssl false`
 
-3. 设置用户名及密码
+3. 设置IP 及端口
+
+```bash
+ceph config set mgr mgr/dashboard/server_addr $IP
+ceph config set mgr mgr/dashboard/server_port $PORT
+
+# 每个mgr实例可以单独设置自己的dashboard
+ceph config set mgr mgr/dashboard/$name/server_addr $IP
+ceph config set mgr mgr/dashboard/$name/server_port $PORT
+```
+
+4. 设置用户名及密码
 
 `sudo ceph dashboard ac-user-create <username> -i <file-containing-password> administrator`
 
-4. 重启dashboard
+5. 重启dashboard
 
 ```bash
 sudo ceph mgr module disable dashboard

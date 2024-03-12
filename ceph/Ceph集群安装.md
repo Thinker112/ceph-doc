@@ -189,6 +189,8 @@ sudo vim /etc/systemd/timesyncd.conf
 NTP=ntp.ntsc.ac.cn
 # 重启 systemd-timesyncd 服务
 sudo service systemd-timesyncd restart
+
+https://www.cnblogs.com/chyhonor/p/8573266.html
 ```
 
 ### 移除主机

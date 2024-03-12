@@ -101,6 +101,15 @@ spec:
     paths:
     - /dev/sdb
     - /dev/sdc
+---
+service_type: osd
+service_id: ceph2_osd
+placement:
+  hosts:
+    - ceph2
+spec:
+  data_devices:
+    all: true
 ```
 
 ## 操作命令
@@ -131,6 +140,40 @@ ceph orch osd rm stop <osd_id(s)>
 ceph_admin@cephadmin:~$ ceph orch osd rm stop 4
 Stopped OSD(s) removal
 ```
+
+```bash
+# 查看osd状态
+sudo ceph osd status
+
+# Example
+ceph_admin@ceph1:/etc/ceph$ sudo ceph osd status
+ID  HOST    USED  AVAIL  WR OPS  WR DATA  RD OPS  RD DATA  STATE
+ 0  ceph1   111G  7451G      0        0       0        0   exists,up
+ 1  ceph1   111G  7451G      0        0       0        0   exists,up
+ 2  ceph1   111G  3725G      0        0       0        0   exists,up
+ 3  ceph1   111G  3725G      0        0       0        0   exists,up
+ 4  ceph1   111G  3725G      0        0       0        0   exists,up
+ 5  ceph1   111G  3725G      0        0       0        0   exists,up
+ 6  ceph1   111G  3725G      0        0       0        0   exists,up
+ 7  ceph1   111G  3725G      0        0       0        0   exists,up
+ 8  ceph3   111G  7451G      0        0       0        0   exists,up
+ 9  ceph3   111G  7451G      0        0       0        0   exists,up
+10  ceph3   111G  3725G      0        0       0        0   exists,up
+11  ceph3   111G  3725G      0        0       0        0   exists,up
+12  ceph3   111G  3725G      0        0       0        0   exists,up
+13  ceph3   111G  3725G      0        0       0        0   exists,up
+14  ceph3   111G  3725G      0        0       0        0   exists,up
+15  ceph3   111G  3725G      0        0       0        0   exists,up
+16            0      0       0        0       0        0   exists,new
+17            0      0       0        0       0        0   exists,new
+18            0      0       0        0       0        0   exists,new
+19            0      0       0        0       0        0   exists,new
+20            0      0       0        0       0        0   exists,new
+21            0      0       0        0       0        0   exists,new
+22            0      0       0        0       0        0   exists,new
+```
+
+
 
 ### 删除现有 OSD
 
