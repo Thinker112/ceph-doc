@@ -50,7 +50,7 @@ zabbix                -
 
 1. 开启控制台
 
-`ceph mgr module enable dashboard`
+`sudo ceph mgr module enable dashboard`
 
 2. 设置使用http协议访问控制台
 
@@ -58,11 +58,11 @@ zabbix                -
 
 3. 设置用户名及密码
 
-`ceph dashboard ac-user-create <username> -i <file-containing-password> administrator`
+`sudo ceph dashboard ac-user-create <username> -i <file-containing-password> administrator`
 
 4. 重启dashboard
 
 ```bash
-ceph mgr module disable dashboard
-ceph mgr module enable dashboard
+sudo ceph mgr module disable dashboard
+sudo ceph mgr module enable dashboard
 ```

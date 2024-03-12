@@ -57,7 +57,7 @@ sudo docker -v
 
 `sudo timedatectl set-timezone Asia/Shanghai`
 
-2. 下载ntp
+2. 主节点下载ntp
 
 `sudo apt install ntp`
 
@@ -66,7 +66,7 @@ sudo docker -v
 ```bash
 sudo vim /etc/ntp.conf
 # 中国国家授时中心
-pool ntp.ntsc.ac.cn
+server ntp.ntsc.ac.cn
 ```
 
 ## 初始化Ceph集群
@@ -77,6 +77,7 @@ pool ntp.ntsc.ac.cn
 4. 开启CEPH CLI
 
 ```bash
+cephadm add-repo --release reef
 # 改用阿里云镜像
 ceph_admin@ceph1:/etc/apt/sources.list.d$ vim ceph.list
 #deb https://download.ceph.com/debian-reef/ jammy main
@@ -148,6 +149,7 @@ osd_crush_chooseleaf_type = {n}
 
 ```bash
 apt install -y cephadm
+sudo apt install ceph-common
 
 #确认ceph命令可用
 ceph -v
@@ -156,9 +158,13 @@ ceph -v
 2. 添加Ceph集群SSH公钥到新主机上 
 
 ```bash
-# 在这之前Ubuntu系统需要先设置root用户密码
-# 修改/etc/ssh/sshd_config配置文件中 PermitRootLogin 字段为 yes
+# 1.在这之前Ubuntu系统需要先设置root用户密码
+ceph_admin@cephadmin:~$ sudo passwd root
 
+# 2.修改/etc/ssh/sshd_config配置文件中 PermitRootLogin 字段为 yes
+sudo systemctl daemon-reload
+sudo systemctl restart ssh
+# 3.添加Ceph集群SSH公钥到新主机上 
 sudo ssh-copy-id -f -i /etc/ceph/ceph.pub root@<new-host>
 ```
 
@@ -172,10 +178,26 @@ sudo ceph orch host add host4 10.10.0.104 --labels _admin
 ```
 
 4. 查看集群中的主机 `ceph orch host ls`
+4. 设置时钟同步
+
+```bash
+# 修改服务器时区
+sudo timedatectl set-timezone Asia/Shanghai
+# 修改配置文件
+sudo vim /etc/systemd/timesyncd.conf
+# 修改ntp
+NTP=ntp.ntsc.ac.cn
+# 重启 systemd-timesyncd 服务
+sudo service systemd-timesyncd restart
+```
 
 ### 移除主机
 
 `ceph orch host drain <host>`
+
+**强制移除离线主机**
+
+`ceph orch host rm <host> --offline --force`
 
 ## [隔离环境中部署](https://docs.ceph.com/en/reef/cephadm/install/#deployment-in-an-isolated-environment)
 
