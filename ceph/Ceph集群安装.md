@@ -101,7 +101,7 @@ ceph status
 sudo ceph orch apply osd --all-available-devices --unmanaged=true
 ```
 
-## 配置文件
+## 配置文件与常用命令
 
 配置文件示例：
 
@@ -138,6 +138,13 @@ osd_pool_default_pg_num = {n}
 #3 for a multi node cluster with hosts across racks, etc.
 osd_crush_chooseleaf_type = {n}
 ```
+
+```bash
+# 查看集群状态详细信息
+sudo ceph health detail
+```
+
+
 
 ## [添加主机](https://docs.ceph.com/en/reef/cephadm/host-management/#adding-hosts)
 

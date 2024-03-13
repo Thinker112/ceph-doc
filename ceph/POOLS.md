@@ -3,7 +3,7 @@
 ## 删除池
 
 ```bash
-ceph osd pool delete {pool-name} [{pool-name} --yes-i-really-really-mean-it]
+    ceph osd pool delete {pool-name} [{pool-name} --yes-i-really-really-mean-it]
 
 # Example
 ceph_admin@ceph1:/etc/ceph$ sudo ceph osd pool delete ecpool ecpool --yes-i-really-really-mean-it
@@ -28,6 +28,8 @@ pool 'ecpool' removed
 sudo rados df
 # 获取特定池或所有池的I/O信息
 sudo ceph osd pool stats [{pool-name}]
+# 查看集群中的pool
+sudo ceph osd lspools
 ```
 
 ## [ERASURE CODE](https://docs.ceph.com/en/reef/rados/operations/erasure-code/)
@@ -40,11 +42,13 @@ sudo ceph osd pool stats [{pool-name}]
 ceph osd pool set ec_pool allow_ec_overwrites true
 ```
 
+[CRUSH CONSTRAINTS CANNOT BE SATISFIED](https://docs.ceph.com/en/reef/rados/troubleshooting/troubleshooting-pg/#crush-constraints-cannot-be-satisfied)
+
 ```yaml
 # 创建配置文件
-sudo ceph osd erasure-code-profile set myprofile-02     k=4     m=2     crush-failure-domain=rack
+sudo ceph osd erasure-code-profile set myprofile-02    k=2   m=1  crush-failure-domain=osd
 # 创建纠删码池
-sudo ceph osd pool create cephfs.cephfs.ecpool3 erasure myprofile-02
+sudo ceph osd pool create ecpool3 erasure myprofile-02
 # 关联应用
 ceph osd pool application enable {pool-name} {application-name}
 
