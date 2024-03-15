@@ -3,7 +3,7 @@
 ## 删除池
 
 ```bash
-    ceph osd pool delete {pool-name} [{pool-name} --yes-i-really-really-mean-it]
+ceph osd pool delete {pool-name} [{pool-name} --yes-i-really-really-mean-it]
 
 # Example
 ceph_admin@ceph1:/etc/ceph$ sudo ceph osd pool delete ecpool ecpool --yes-i-really-really-mean-it

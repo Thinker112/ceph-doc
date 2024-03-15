@@ -53,11 +53,10 @@ ceph_admin@ceph1:~$ sudo ceph mgr stat
     "active_name": "ceph3.hhzlsj",
     "num_standby": 0
 }
-
 ```
 
 ```bash
-ceph_admin@ceph1:~$ sudo ceph mgr services
+ceph_admin@ceph1:~$ sudo ceph mgr services	
 {
     "dashboard": "http://10.120.5.21:8443/",
     "prometheus": "http://10.120.5.23:9283/"
@@ -102,3 +101,4 @@ ceph config set mgr mgr/dashboard/$name/server_port $PORT
 sudo ceph mgr module disable dashboard
 sudo ceph mgr module enable dashboard
 ```
+
