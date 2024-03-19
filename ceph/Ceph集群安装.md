@@ -69,6 +69,31 @@ sudo vim /etc/ntp.conf
 server ntp.ntsc.ac.cn
 ```
 
+```
+#允许上层时间服务器主动修改本机时间
+restrict ntp.ntsc.ac.cn nomodify notrap noquery
+
+#外部时间服务器不可用时，以本地时间作为时间服务
+server  127.127.1.0     # local clock
+fudge   127.127.1.0 stratum 10
+
+# Local users may interrogate the ntp server more closely.
+restrict 127.0.0.1
+restrict ::1
+
+# Needed for adding pool entries
+restrict source notrap nomodify noquery
+
+# Clients from this (example!) subnet have unlimited access, but only if
+# cryptographically authenticated.
+#restrict 192.168.123.0 mask 255.255.255.0 notrust
+restrict 10.120.5.0 mask 255.255.255.0 nomodify notrap
+```
+
+参考文档：
+
+[ntp服务器配置](https://www.cnblogs.com/chyhonor/p/8573266.html)
+
 ## 初始化Ceph集群
 
 1. `apt install -y cephadm`
