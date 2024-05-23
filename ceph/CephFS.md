@@ -66,3 +66,12 @@ mkdir /mnt/mycephfs
 mount -t ceph <name>@<fsid>.<fs_name> =/ /mnt/mycephfs
 ```
 
+#### [持久化挂载](https://docs.ceph.com/en/reef/cephfs/mount-using-kernel-driver/#persistent-mounts)
+
+```bash
+# 编辑/etc/fstab
+cephuser@.cephfs=/     /mnt/ceph    ceph    mon_addr=192.168.0.1:6789,noatime,_netdev    0       0
+# 使配置生效
+sudo mount -a
+```
+
