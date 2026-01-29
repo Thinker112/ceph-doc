@@ -30,6 +30,23 @@ sudo rados df
 sudo ceph osd pool stats [{pool-name}]
 # 查看集群中的pool
 sudo ceph osd lspools
+# 查看 pool 的空间使用情况
+sudo ceph df
+ceph_admin@ceph1:~$ sudo ceph df
+--- RAW STORAGE ---
+CLASS     SIZE   AVAIL    USED  RAW USED  %RAW USED
+hdd    112 TiB  93 TiB  19 TiB    19 TiB      16.87
+TOTAL  112 TiB  93 TiB  19 TiB    19 TiB      16.87
+
+--- POOLS ---
+POOL                ID   PGS   STORED  OBJECTS     USED  %USED  MAX AVAIL
+.mgr                 1     1   18 MiB        6   55 MiB      0     27 TiB
+cephfs.cephfs.meta   2    16  261 MiB       96  782 MiB      0     27 TiB
+cephfs.cephfs.data   3  1024  1.2 TiB  315.26k  3.6 TiB   4.26     27 TiB
+erasurepool          9    32      0 B        0      0 B      0     53 TiB
+erasurepool2        10    32  9.1 TiB    4.93M   14 TiB  14.50     53 TiB
+metadata            11    16  1.9 GiB    5.15k  5.8 GiB      0     27 TiB
+
 ```
 
 ## [ERASURE CODE](https://docs.ceph.com/en/reef/rados/operations/erasure-code/)
